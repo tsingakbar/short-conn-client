@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
   machine.StatusReport(stat);
   std::cout << PrintStat() << std::endl;
 
-  std::this_thread::sleep_for(5s);
+  std::this_thread::sleep_for(3s);
 
   machine.StatusReport(stat);
   std::cout << PrintStat() << std::endl;

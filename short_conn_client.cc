@@ -128,7 +128,7 @@ class ResponseInternal : public Response {
     bool fd_closed_ = false;
   } fd_;
 
-  class HttpParserImp : public Response::ParsedHttp {
+  class HttpParserImp : public Response::Parser, public Response::ParsedHttp {
    public:
     bool Complete() const noexcept override { return parse_stat_ == ParseStat::kComplete; }
     const std::string& StatusLine() const noexcept override { return status_line_; }
@@ -139,7 +139,7 @@ class ResponseInternal : public Response {
     }
     const std::string_view& Body() const noexcept override { return body_view_; }
 
-    bool Feed(std::string_view part) noexcept {
+    bool Feed(std::string_view part) noexcept override {
       if (parse_stat_ == ParseStat::kComplete) {
         return true;
       }
@@ -290,6 +290,11 @@ class ResponseInternal : public Response {
  private:
   std::chrono::steady_clock::time_point tp_expire_;
 };
+
+std::tuple<Response::Parser*, Response::ParsedHttp*> CreateHttpParserForTest() {
+  ResponseInternal::HttpParserImp* p = new ResponseInternal::HttpParserImp();
+  return std::make_tuple<Response::Parser*, Response::ParsedHttp*>(p, p);
+}
 
 struct Session {
   std::unique_ptr<RequestInternal> req;

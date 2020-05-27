@@ -44,9 +44,18 @@ class Response {
   };
   virtual const std::optional<FailInfo>& Fail() const noexcept = 0;
 
-  class ParsedHttp {
+  class Parser {
+   public:
+    virtual bool Feed(std::string_view part) noexcept = 0;
+  };
+
+  class Parsed {
    public:
     virtual bool Complete() const noexcept = 0;
+  };
+
+  class ParsedHttp : public Parsed {
+   public:
     virtual const std::string& StatusLine() const noexcept = 0;
     virtual const std::vector<std::string>& HeaderList() const noexcept = 0;
     virtual const std::unordered_map<std::string_view, std::string_view>& HeaderMap()
@@ -55,6 +64,11 @@ class Response {
   };
   virtual const ParsedHttp& Http() const noexcept = 0;
 };
+
+#ifdef UNIT_TEST
+// 给单元测试用的，调用方不要管理内存，因为肯定是泄露的
+std::tuple<Response::Parser*, Response::ParsedHttp*> CreateHttpParserForTest();
+#endif
 
 class Machine {
  public:
