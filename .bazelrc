@@ -1,0 +1,9 @@
+build --cxxopt="--std=c++17"
+build --copt=-g
+build --copt=-O0
+#build --strip=never
+
+#build --copt=-fsanitize=address
+#build --copt=-DADDRESS_SANITIZER
+#build --copt=-fno-omit-frame-pointer
+#build --linkopt="-fsanitize=address"
