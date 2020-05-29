@@ -1,6 +1,6 @@
 # short-conn-client
 
-http client library imlemented with short connection.
+http client library implemented with short connection.
 
 copy short-conn-client.h/cc to your project and your are ready to go.
 
@@ -14,5 +14,5 @@ take much more than 5ms to trigger callback, which is not acceptable in my case.
 
 ## production prooved
 
-The internet service using this library to access another http miroc-service handles 3,000,000,000 requests 
+The internet service using this library to access another http miroc-service handles 4,000,000,000 requests 
 daily with accurate timeout triggering.
