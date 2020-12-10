@@ -473,7 +473,7 @@ class Machine::Imp {
     }
     struct linger st_linger {
       .l_onoff = 1,       // close后还有未发送数据允许逗留
-          .l_linger = 0,  // 逗留时间是0秒
+      .l_linger = 0,      // 逗留时间是0秒，这将导致我们关闭我们的客户端fd的时候直接干TCP RST
     };
     if (::setsockopt(fd, SOL_SOCKET, SO_LINGER, reinterpret_cast<const void*>(&st_linger),
                      sizeof(linger)) < 0) {
